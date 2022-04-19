@@ -1,0 +1,22 @@
+{
+  "name": "rest-api",
+  "version": "1.0.0",
+  "description": "REST API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marenga14/NODE_RESTFUL.git"
+  },
+  "keywords": [
+    "marenga14"
+  ],
+  "author": "marenga Julius",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marenga14/NODE_RESTFUL/issues"
+  },
+  "homepage": "https://github.com/marenga14/NODE_RESTFUL#readme"
+}
