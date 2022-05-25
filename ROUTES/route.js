@@ -1,12 +1,19 @@
 const express = require('express')
-const feedsController =require('../CONTROLLER/FEED.JS')
-const route  = express.Router()
+
+const {check,body}=require('express-validator/check')
+const feedsController =require('../CONTROLLER/FEED.JS');
+const route  = express.Router();
+route.post('/feeds', [
+    body('title').trim().isLength({min:7}),
+    body('content').trim().isLength({min:7}
+    )],feedsController.getFeeds);
 
 
+route.get('/feedpos',feedsController.postFeeds)
 
+route.get('/singlePost/:postId',feedsController.getsingleHouse);
 
+route.delete('/deletePost/:postId',feedsController.deleteHouse);
+route.put('/updateHouse/:postId',feedsController.updateHouse);
 
-
-route.get('/feeds',feedsController.getFeeds)
-
-module.exports=route;
+module.exports= route;
