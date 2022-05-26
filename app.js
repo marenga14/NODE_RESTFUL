@@ -6,6 +6,7 @@ const theRoutes =require('./ROUTES/route')
 const authroute =require('./ROUTES/auth')
 const {check,body} = require('express-validator')
 
+
 const MONGODB_URI="mongodb://localhost:27017/REST_MAKAZI";
 
 app.use(bodyParser.json())
@@ -45,11 +46,11 @@ const fileStorage = multer.diskStorage({
      cb(null, false)
      }
  }
-
  app.use(multer({storage:fileStorage, fileFilter:fileFilter}).single('image'))
  app.use(  express.static(path.join(__dirname,'images')));
 app.use(theRoutes);
 app.use(authroute);
+ 
 db();
    app.listen(8080,()=>{
       console.log('server is listening')

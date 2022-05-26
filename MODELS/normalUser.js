@@ -14,7 +14,7 @@ const mongoose =require('mongoose');
      required:true,
     },
 
-    pass:{
+    password:{
         type:String,
         reqired:true,
     },
@@ -27,7 +27,7 @@ const mongoose =require('mongoose');
          
     Status:{
                 type:String,
-                required:true
+                default:"i am in"
                 
             }
 
@@ -37,3 +37,6 @@ const mongoose =require('mongoose');
      
      
  );
+
+ 
+module.exports =mongoose.model('User',normalSchema)
