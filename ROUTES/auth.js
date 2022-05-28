@@ -1,5 +1,5 @@
 const express = require('express')
-
+const auth= require('../middleware/is-auth')
 const {check,body}=require('express-validator/check')
 const feedsController =require('../CONTROLLER/FEED');
 const usercontroller =require('../CONTROLLER/user');
@@ -13,7 +13,7 @@ body('name').trim().not().isEmpty()
 
 ], usercontroller.signup )
 
-route.put('login',usercontroller.login)
+route.post('/login',usercontroller.login)
 
 
 

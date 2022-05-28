@@ -1,7 +1,7 @@
 const {validationResult} =require( 'express-validator/check')
 const housedetail =require ('../MODELS/housedetals')
 const path =require('path')
-
+const auth =require('../middleware/is-auth')
 
 exports.getFeeds =(req,res,next)=>{
 

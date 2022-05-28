@@ -52,9 +52,9 @@ const password =req.body.password;
 
 exports.login=(req,res,next)=>{
     
-
+let loaderUser;
     const email = req.body.email;
-    const password =req.body.passwors;
+    const password =req.body.password;
     User.findOne({email:email}).then(
         user=>{
             if(!user){
@@ -63,6 +63,7 @@ exports.login=(req,res,next)=>{
                 throw error
             }
 
+            loaderUser =user;
           return  bicrypt.compare(password, user.password)
 
         }
@@ -79,8 +80,7 @@ exports.login=(req,res,next)=>{
             
         },'marengajuliusmtumbadisanakwakweli',{expiresIn:'1h'} )
 
-    })
-    .then(result=>{
+    
         res.status(200).json({
             token:token
         })

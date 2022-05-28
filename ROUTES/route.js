@@ -1,4 +1,5 @@
 const express = require('express')
+const isAuth =require('../middleware/is-auth')
 
 const {check,body}=require('express-validator/check')
 const feedsController =require('../CONTROLLER/FEED.JS');
@@ -9,7 +10,7 @@ route.post('/feeds', [
     )],feedsController.getFeeds);
 
 
-route.get('/feedpos',feedsController.postFeeds)
+route.get('/feedpos',isAuth, feedsController.postFeeds)
 
 route.get('/singlePost/:postId',feedsController.getsingleHouse);
 
