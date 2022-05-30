@@ -2,6 +2,7 @@ const {validationResult} =require( 'express-validator/check')
 const housedetail =require ('../MODELS/housedetals')
 const path =require('path')
 const auth =require('../middleware/is-auth')
+const User = require('../MODELS/normalUser')
 
 exports.getFeeds =(req,res,next)=>{
 
@@ -25,7 +26,8 @@ if(!errors.isEmpty()){
     const title =req.body.title;
     const content =req.body.content;
     const imageUrl = req.file.path;
-     console.log(imageUrl)
+    
+     
 
 
     const house = new housedetail({
@@ -33,15 +35,25 @@ if(!errors.isEmpty()){
                     content:content,
                     title:title,
                     imageUrl:imageUrl,
-                    creator:{name:"marengaaa"}
+                    creator:req.userId 
     })
-    house.save().then(result=>{
-        
-console.log(result);
-        res.status(200).json({
-            message:'sucessifull posted',
-            post:result
-        })
+
+    house.save()
+    .then(result=>{
+          let creator;
+          return User.findById(req.userId)
+           
+           }).then(user=>{
+            user.Posts.push(house)
+            creator =user;
+            return user.save();
+           })
+           .then( result=>{
+            res.status(200).json({
+                message:'sucessifull posted',
+                post:house,
+                creator:{_id:creator._id,creator: creator.name}
+            })
     }).catch(err=>console.log(err))
 
 
@@ -96,7 +108,7 @@ housedetail.findById(houseId).then(house=>{
         error.statusCode=404;
         throw error;
     }
-    console.log(house)
+    
     res.status(200).json({
         message:"the house was fetched",
         post:house,
@@ -111,24 +123,43 @@ housedetail.findById(houseId).then(house=>{
 }
 
 exports.deleteHouse =(req, res,next)=>{
-
 const houseId =req.params.postId;
-housedetail.findOne({_id:houseId}).then(house=>{
+housedetail
+.findById(houseId)
+.then(house=>{
     if(!house){
 
         const error =new Error("No house found");
         error.statusCode=404;
         throw error;
     }
-    house.deleteOne({_id:houseId});
-console.log("house deleted");
-res.status(200).json({
-    message:"Delete complete"
-})
+       console.log(`${house.creator} and ${req.userId}`)
+  
+    if(house.creator._id.toString() !== req.userId)
+    {
+
+    const error = new Error('not authorised')
+    error.statusCode=401;
+    throw error
     
-}).catch(err=>{
-    console.log("err")
+    }
+    return house.deleteOne({_id:houseId})  
 })
+.then(result=>{
+        return User.findById(req.userId)
+}).then(user=>{
+    console.log(user)
+    user.Posts.pull(houseId)
+    user.save();
+    res.status(200).json({
+        message:"Delete complete"
+         })
+   
+})
+.catch(err=>{
+    console.log(err)
+})
+
 }
 
 
@@ -139,7 +170,8 @@ exports.updateHouse = (req,res,next) =>{
     const updatedContent =req.body.content;
     const updatedImageUrl=req.bod
 
-    housedetail.findOne({_id:houseId}).then(house=>{
+    housedetail.findOne({_id:houseId,creator:req.userId})
+    .then(house=>{
 
         if(!house){
 

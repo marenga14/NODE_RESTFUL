@@ -21,7 +21,7 @@ const mongoose =require('mongoose');
           
     Posts:[{
                 type:Schema.Types.ObjectId,  
-                ref:'housedetail',
+                ref:'housedetals',
                 required:true
             }],
          
@@ -39,4 +39,4 @@ const mongoose =require('mongoose');
  );
 
  
-module.exports =mongoose.model('User',normalSchema)
+module.exports =mongoose.model('normalUser',normalSchema)

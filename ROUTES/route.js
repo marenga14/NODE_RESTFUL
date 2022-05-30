@@ -7,14 +7,14 @@ const route  = express.Router();
 route.post('/feeds', [
     body('title').trim().isLength({min:5}),
     body('content').trim().isLength({min:5}
-    )],feedsController.getFeeds);
+    )],isAuth,feedsController.getFeeds);
 
 
 route.get('/feedpos',isAuth, feedsController.postFeeds)
 
-route.get('/singlePost/:postId',feedsController.getsingleHouse);
+route.get('/singlePost/:postId',isAuth,feedsController.getsingleHouse);
 
-route.delete('/deletePost/:postId',feedsController.deleteHouse);
-route.put('/updateHouse/:postId',feedsController.updateHouse);
+route.delete('/deletePost/:postId',isAuth,feedsController.deleteHouse);
+route.put('/updateHouse/:postId',isAuth,feedsController.updateHouse);
 
 module.exports= route;

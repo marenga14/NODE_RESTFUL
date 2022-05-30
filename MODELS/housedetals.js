@@ -22,24 +22,21 @@ content:{
   type:String,
   required:true,
 },
- creator:{
-     type:Object,
-     require:String
- }
+
     
 // price:{
 //   type:Number,
 //   required:true
 // },
 
-// userId:{
-//   type: mongoose.Schema.Types.ObjectId, 
-//   required:true,
-//   ref: 'normalUser',
-// },
+creator:{
+  type:Schema.Types.ObjectId, 
+  required:true,
+  ref: 'normalUser',
+},
 
 
    
 }, {timestamps:true})
 
-module.exports =mongoose.model('housedetail',addHouse)
+module.exports =mongoose.model('housedetals',addHouse)

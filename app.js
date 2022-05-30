@@ -5,7 +5,8 @@ const bodyParser =require('body-parser')
 const theRoutes =require('./ROUTES/route')
 const authroute =require('./ROUTES/auth')
 const {check,body} = require('express-validator')
-
+const usercontroller = require('./CONTROLLER/user')
+ 
 
 const MONGODB_URI="mongodb://localhost:27017/REST_MAKAZI";
 

@@ -5,7 +5,8 @@ const bicrypt =require('bcryptjs')
 const User =require('../MODELS/normalUser')
 const bycrpt = require('bcryptjs')
 const jwt =require('jsonwebtoken')
-
+    
+let loaderUser;
 
 
 //signup user
@@ -52,7 +53,7 @@ const password =req.body.password;
 
 exports.login=(req,res,next)=>{
     
-let loaderUser;
+
     const email = req.body.email;
     const password =req.body.password;
     User.findOne({email:email}).then(
